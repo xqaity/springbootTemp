@@ -1,0 +1,182 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  # Spring security 的账号密码修改
+  security:
+    user:
+      name: user
+      password: 111111
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: true #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          url: ENC(FGoE6Rewzv+a/gJHkXywO9Jw+PiqxpI+dn871h3/BXYWjOMi7xgVOokkZ6aElmTMIQCiU7I96+y4p7Qe/Vchvv+eE9knxnM45ofgh4cBREAP9wP7sXN1VVrZj1LlRne7LuZHFMViNLaCql7EB7JxniGxurx38tGnhMgvQRwdrJrHP+k7vr4YyLiVLxG2uY6E2m6m2TFCljeSfkiBTWx96Q==)
+          username: ENC(F/w9STclReHBYvRvq5CbR7sLCE54iCNHrKfZRs/+jk691yEbWcY/ym1rpJJa23Of)
+          # Jasypt加密 可到common-utils中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果) 以下解密结果为123456
+      #    password: ENC(uOtmALFgsfxgYzEg1uLXl3O/tg6X1Dy25I3SdAeqqETOyZbDwmaW0/EZEusIh6hK)
+          password: ENC(g3yQ2Npk9y2m4neFLK0Qka1EBq/dFu8RfYbUrAhLLW0QVm/SuzloGX9gPDUZZ+eR)
+          type: com.alibaba.druid.pool.DruidDataSource
+          driverClassName: com.mysql.cj.jdbc.Driver
+        slave:
+          url: jdbc:mysql://127.0.0.1:13306/xq_mode_slave?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+          username: root
+          # Jasypt加密 可到common-utils中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果) 以下解密结果为123456
+          #    password: ENC(uOtmALFgsfxgYzEg1uLXl3O/tg6X1Dy25I3SdAeqqETOyZbDwmaW0/EZEusIh6hK)
+          password: root
+          type: com.alibaba.druid.pool.DruidDataSource
+          driverClassName: com.mysql.cj.jdbc.Driver
+#        slave_2:
+#        oracle_1:
+#        oracle_2:
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 50MB
+    #  datasource:
+#    url: jdbc:mysql://127.0.0.1:13306/xq_mode?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+#    username: root
+#    # Jasypt加密 可到common-utils中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果) 以下解密结果为123456
+##    password: ENC(uOtmALFgsfxgYzEg1uLXl3O/tg6X1Dy25I3SdAeqqETOyZbDwmaW0/EZEusIh6hK)
+#    password: root
+##    type: com.alibaba.druid.pool.DruidDataSource
+#    driverClassName: com.mysql.cj.jdbc.Driver
+    # Druid StatViewServlet配置
+#    druid:
+#      stat-view-servlet:
+#        # 默认true 内置监控页面首页/druid/index.html
+#        enabled: true
+#        url-pattern: /druid/*
+#        # 允许清空统计数据
+#        reset-enable: true
+#        login-username: root
+#        login-password: root
+#        # IP白名单 多个逗号分隔
+#        allow:
+#        # IP黑名单
+#        deny:
+#      filter:
+#        stat:
+#          # 开启监控sql
+#          enabled: true
+#          # 显示并标注慢sql 默认当超过3秒显示
+#          log-slow-sql: true
+#          slow-sql-millis: 3000
+#          merge-sql: true
+#        # 防SQL注入过滤
+#        wall:
+#          config:
+#            # 允许多条sql同时执行
+#            multi-statement-allow: true
+  jpa:
+    show-sql: true
+    # 自动生成表结构
+    hibernate:
+      ddl-auto: update
+  ## Redis配置
+  redis:
+#    password: xxxx1234
+#    cluster:
+#      nodes:
+    jedis:
+      pool:
+        #最大连接数
+        max-active: 8
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: -1
+        #最小空闲
+        min-idle: 0
+        #最大空闲
+        max-idle: 8
+    #连接超时时间
+    timeout: 10000
+    host: 127.0.0.1
+    port: 6379
+  ##Redisson配置
+#  redisson:
+#    enable: false
+#    cluster-servers-config:
+##      cluster-nodes: ${spring.redis.cluster.nodes}
+#      load-balancer-mode: RADOM
+##      password: ${spring.redis.password}
+#      slave-connection-minimum-idle-size: 8
+#      slave-connection-pool-size: 16
+#      sslEnableEndpointIdentification: false
+#    threads: 8
+#    nettyThreads: 8
+#    transportMode: NIO
+mybatis-plus:
+  typeEnumsPackage: cn.xq.base
+  global-config:
+    db-config:
+      logic-delete-field: delFlag # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+jwt:
+  tokenHeader: Authorization
+  secret: fjj-secrt
+  expiration: 604800
+  tokenHead: Bearer
+swagger:
+  title: XBoot API接口文档
+  description: XBoot Api Documentation
+  version: 1.0.0
+  termsOfServiceUrl: http://xboot.exrick.cn
+  contact:
+    name: Exrick
+    url: http://blog.exrick.cn
+    email: 1012139570@qq.com
+  # 分组名
+  group: 1.XBoot管理接口 v1.0
+
+
+jasypt:
+  encryptor:
+    password: Y6M9fAJQdU7jNp5MW
+
+# 忽略url
+ignored:
+  # 无需登录认证的请求
+  urls:
+    - /druid/**
+    - /doc.html
+    - /swagger-resources/**
+    - /v2/api-docs
+    - /**/*.js
+    - /**/*.css
+    - /**/*.png
+    - /**/*.ico
+    - /xq/test/**
+  # 限流及黑名单不拦截的路径
+  limitUrls:
+    - /**/*.js
+    - /**/*.css
+    - /**/*.png
+    - /**/*.ico
+userinfo:
+  age: 25
+  name: xq
+  active: true
+  created-date: 2022/05/24 13:55:30
+  map: {k1: v1,k2: v2}
+  hobbies:
+    - one
+    - two
+    - three
+xq:
+  token:
+    # 默认为true，token将存入redis，并具有单点登录功能 设为false使用JWT交互
+    redis: true
+    # 是否开启单设备登陆 仅当token交互方式为redis时生效
+    sdl: false
+    # token中存储用户权限数据 设为true开启后可避免每次请求再获取用户权限，但有可能导致编辑权限菜单后无法读取到最新权限数据（需用户重新登录）
+    storePerms: true
+    # token过期时间 redis模式有请求自动刷新（分钟）
+    tokenExpireTime: 60
+    # 用户选择 保存登录状态/记住我 对应token过期时间（天）
+    saveLoginTime: 7
+    # 限制用户登陆错误次数（次）
+    loginTimeLimit: 10
+    # 错误超过次数后多少分钟后才能继续登录（分钟）
+    loginAfterTime: 10
